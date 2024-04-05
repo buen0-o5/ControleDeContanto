@@ -1,0 +1,96 @@
+﻿@using ControleDeContator.Enuns
+@model List<ControleDeContator.Models.UsuarioModel>
+@{
+    ViewData["Title"] = "Listagem de usuários";
+}
+<div class="text-center">
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+        <a role="button" class="btn btn-primary" asp-controller="Usuario" asp-action="Criar">Adicionar novo usuário</a>
+    </div>
+    <br />
+    @if (TempData["MensagemSucesso"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            <button type="button" class="btn btn-danger btn-sm close-alert" aria-label="Close">X</button>
+            @TempData["MensagemSucesso"]
+        </div>
+    }
+
+
+    @if (TempData["MensagemErro"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            <button type="button" class="btn btn-danger btn-sm close-alert" aria-label="Close">X</button>
+
+            @TempData["MensagemErro"]
+        </div>
+    }
+
+    <br />
+
+
+    <h1 class="display-4">@ViewData["Title"]</h1>
+
+    <table id="table-usuarios" class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Login</th>
+                <th scope="col">E-mail</th>
+                <th scope="col">Perfil</th>
+                <th scope="col">Total de contatos</th>
+                <th scope="col">Data de cadatro</th>
+                <th scope="col"></th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var usuario in Model)
+                {
+                    <tr>
+                        <th scope="row">@usuario.Id</th>
+                        <th scope="row">@usuario.Nome</th>
+                        <th scope="row">@usuario.Login</th>
+                        <th scope="row">@usuario.Email</th>
+                        <th scope="row">@(usuario.Perfil == PerfilEnum.Admin? "Administrador" : "Padrão")</th>
+                        <th scope="row">
+                            <a href="javascript:" usuario-id="@usuario.Id" class="btn btn-success btn-sm btn-total-contatos">
+                                @(usuario.Contatos != null && usuario.Contatos.Any() ? usuario.Contatos.Count: 0)
+                            </a>
+                        </th>
+                        <th scope="row">@usuario.DataCadastro</th>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a asp-route-id="@usuario.Id" role="button" class="btn btn-primary" asp-controller="Usuario" asp-action="Editar">Editar</a>
+                                <a asp-route-id="@usuario.Id" role="button" class="btn btn-danger" asp-controller="Usuario" asp-action="ApagarConfirmacao">Apagar</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+
+
+    <div id="modalContatosUsuario" class="modal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Listagem de contato</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                   <div id="listaContatosUsuario"></div>
+                </div>
+           
+            </div>
+        </div>
+    </div>
+</div>

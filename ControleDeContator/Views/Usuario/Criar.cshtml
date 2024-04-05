@@ -1,0 +1,48 @@
+﻿@using ControleDeContator.Enuns
+@model ControleDeContator.Models.UsuarioModel
+
+
+@{
+    ViewData["Title"] = "Usuário contato";
+}
+
+
+<h1 class="display-4">Cadastrar usuário</h1>
+<form asp-controller="Usuario" asp-action="Criar" method="post">
+    <div class="mb-3">
+        <label for="Nome" class="form-label">Nome</label>
+        <input asp-for="Nome" type="text" class="form-control" placeholder="Digite o nome usuário">
+        <span class="text-danger"> @Html.ValidationMessageFor(x => x.Nome)</span>
+    </div>
+    <div class="mb-3">
+        <label for="Email" class="form-label">E-mail</label>
+        <input asp-for="Email" type="text" class="form-control" placeholder="Digite o e-mail usuário">
+        <span class="text-danger"> @Html.ValidationMessageFor(x => x.Email)</span>
+    </div>
+
+    <div class="mb-3">
+        <label for="login" class="form-label">Login</label>
+        <input asp-for="Login" type="text" class="form-control" placeholder="Digite o login do usuário">
+        <span class="text-danger"> @Html.ValidationMessageFor(x => x.Login)</span>
+    </div>
+    <div class="mb-3">
+        <label for="senha" class="form-label">Senha</label>
+        <input asp-for="Senha" type="password" class="form-control" placeholder="Digite a senha do usuário">
+        <span class="text-danger"> @Html.ValidationMessageFor(x => x.Senha)</span>
+    </div>
+
+    <div class="mb-3">
+        <label for="senha" class="form-label">Perfil</label>
+        <select asp-for="Perfil" class="form-control">
+            <option value="">Selecionar</option>
+            <option value="@PerfilEnum.Admin">Administrador</option>
+            <option value="@PerfilEnum.Padrao">Padrão</option>
+        </select>
+        <span class="text-danger"> @Html.ValidationMessageFor(x => x.Perfil)</span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Adicionar</button>
+    <a asp-controller="Usuario" asp-action="Index" class="btn btn-secondary"> Voltar</a>
+</form>
+
+

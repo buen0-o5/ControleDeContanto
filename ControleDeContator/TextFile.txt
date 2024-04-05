@@ -1,0 +1,6 @@
+﻿comandos do Packege Manager
+
+
+update-Database -Context BancoContext
+
+Add-Migration CriandoTableContatos -Context BancoContext
